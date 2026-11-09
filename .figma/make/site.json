@@ -1,0 +1,10 @@
+{
+  "description": "Connect and share with friends through a dynamic social network that fosters communication, community building, and real-time interaction.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
