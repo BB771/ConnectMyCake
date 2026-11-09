@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Vitrine from './Vitrine'
 import Explorer from './Explorer'
-import EspacePro from './EspacePro'
 import Messagerie from './Messagerie'
 import Admin from './Admin'
 
@@ -195,11 +194,6 @@ const Icon = {
   Bell: () => (
     <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
       <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-    </svg>
-  ),
-  Briefcase: () => (
-    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-      <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
     </svg>
   ),
   Plus: () => (
@@ -431,7 +425,6 @@ function NavBar({ activeNav, setActiveNav, onShowVitrine, onShowAdmin }: {
   const navItems = [
     { key: 'home', icon: <Icon.Home />, label: 'Fil' },
     { key: 'search', icon: <Icon.Search />, label: 'Explorer' },
-    { key: 'pro', icon: <Icon.Briefcase />, label: 'Pro' },
     { key: 'messages', icon: <MsgIcon />, label: 'Messages' },
     { key: 'notifs', icon: <Icon.Bell />, label: 'Alertes' },
   ]
@@ -493,12 +486,6 @@ export default function App() {
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)' }}>
       <NavBar activeNav={activeNav} setActiveNav={setActiveNav} onShowVitrine={() => setShowVitrine(true)} onShowAdmin={() => setShowAdmin(true)} />
       <Explorer onOpenVitrine={() => setShowVitrine(true)} />
-    </div>
-  )
-  if (activeNav === 'pro') return (
-    <div style={{ minHeight: '100vh', background: 'var(--color-bg)' }}>
-      <NavBar activeNav={activeNav} setActiveNav={setActiveNav} onShowVitrine={() => setShowVitrine(true)} onShowAdmin={() => setShowAdmin(true)} />
-      <EspacePro />
     </div>
   )
   if (activeNav === 'messages') return (
