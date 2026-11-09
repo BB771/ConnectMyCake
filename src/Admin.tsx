@@ -2,12 +2,11 @@ import { useState } from 'react'
 
 /* ─── Types & Data ── */
 
-type AdminSection = 'dashboard' | 'artisans' | 'contenus' | 'offres' | 'signalements' | 'parametres'
+type AdminSection = 'dashboard' | 'artisans' | 'contenus' | 'signalements' | 'parametres'
 
 const STATS = [
   { label: 'Artisans inscrits', value: '1 284', delta: '+47', trend: 'up', sub: 'ce mois' },
   { label: 'Publications', value: '8 931', delta: '+312', trend: 'up', sub: 'ce mois' },
-  { label: 'Offres actives', value: '43', delta: '+6', trend: 'up', sub: 'en ligne' },
   { label: 'Messages échangés', value: '24.7K', delta: '+1.2K', trend: 'up', sub: 'ce mois' },
   { label: 'Signalements ouverts', value: '7', delta: '-3', trend: 'down', sub: 'à traiter' },
   { label: 'Revenus abonnements', value: '3 840 €', delta: '+280 €', trend: 'up', sub: 'ce mois' },
@@ -33,15 +32,6 @@ const CONTENUS = [
   { id: 3, user: 'thomas.levy', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&auto=format', preview: 'https://images.unsplash.com/photo-1583338917451-face2751d8d5?w=120&h=80&fit=crop&auto=format', caption: 'Promo vitrine — offre spéciale, réduction 50%, cliquez ici…', date: '23 sep. 2026', likes: 12, reports: 4, status: 'signalé' },
   { id: 4, user: 'elena.d', avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=60&h=60&fit=crop&auto=format', preview: 'https://images.unsplash.com/photo-1726950189914-8fe1016eb9c7?w=120&h=80&fit=crop&auto=format', caption: 'Samedi vitrine chargée, éclairs signature, millefeuilles vanille-caramel…', date: '22 sep. 2026', likes: 1487, reports: 0, status: 'publié' },
   { id: 5, user: 'inconnu.u', avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=60&h=60&fit=crop&auto=format', preview: 'https://images.unsplash.com/photo-1683223063461-5d5a35bef2a2?w=120&h=80&fit=crop&auto=format', caption: 'Achetez mes produits pas chers, qualité garantie, livraison rapide…', date: '21 sep. 2026', likes: 3, reports: 7, status: 'signalé' },
-]
-
-const OFFRES_ADMIN = [
-  { id: 1, poste: 'Chef Pâtissier', entreprise: 'Maison Lenôtre', ville: 'Paris 16e', type: 'CDI', status: 'active', submitted: '22 sep.', candidatures: 14 },
-  { id: 2, poste: 'Pâtissier Confirmé', entreprise: 'Hôtel Le Bristol', ville: 'Paris 8e', type: 'CDI', status: 'active', submitted: '21 sep.', candidatures: 9 },
-  { id: 3, poste: 'Chocolatier Artisan', entreprise: 'Atelier Vidal', ville: 'Nantes', type: 'CDI', status: 'en attente', submitted: '24 sep.', candidatures: 0 },
-  { id: 4, poste: 'Pâtissier – Ouverture', entreprise: 'Groupe Ladurée', ville: 'Lyon', type: 'CDI', status: 'active', submitted: '19 sep.', candidatures: 21 },
-  { id: 5, poste: 'Apprenti Glacier', entreprise: 'Glacier Fournier', ville: 'Annecy', type: 'Alternance', status: 'expirée', submitted: '10 sep.', candidatures: 5 },
-  { id: 6, poste: 'Formateur Pâtisserie', entreprise: 'École Ferrandi', ville: 'Paris 6e', type: 'CDD', status: 'en attente', submitted: '23 sep.', candidatures: 0 },
 ]
 
 const SIGNALEMENTS = [
@@ -336,47 +326,6 @@ function Contenus() {
   )
 }
 
-function OffresAdmin() {
-  const [offres, setOffres] = useState(OFFRES_ADMIN)
-  const approve = (id: number) => setOffres(prev => prev.map(o => o.id === id ? { ...o, status: 'active' } : o))
-  const expire = (id: number) => setOffres(prev => prev.map(o => o.id === id ? { ...o, status: 'expirée' } : o))
-
-  return (
-    <div>
-      <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 300, fontStyle: 'italic', color: 'var(--color-text)', margin: '0 0 24px' }}>Offres d'emploi</h2>
-      <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 16, overflow: 'hidden' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-          <thead>
-            <tr>
-              {['Poste', 'Entreprise', 'Ville', 'Type', 'Candidatures', 'Soumis', 'Statut', 'Actions'].map(h => <th key={h} style={th}>{h}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {offres.map(o => (
-              <tr key={o.id}>
-                <td style={{ ...td, fontWeight: 600, fontSize: 14, color: 'var(--color-text)' }}>{o.poste}</td>
-                <td style={{ ...td, fontSize: 13, color: 'var(--color-text-dim)' }}>{o.entreprise}</td>
-                <td style={{ ...td, fontSize: 13, color: 'var(--color-text-dim)' }}>{o.ville}</td>
-                <td style={td}><span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, background: 'rgba(201,169,110,0.08)', border: '1px solid rgba(201,169,110,0.2)', color: 'var(--color-gold)', borderRadius: 20, padding: '2px 10px' }}>{o.type}</span></td>
-                <td style={{ ...td, fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--color-text)' }}>{o.candidatures}</td>
-                <td style={{ ...td, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--color-muted)' }}>{o.submitted}</td>
-                <td style={td}><StatusBadge s={o.status} /></td>
-                <td style={td}>
-                  <div style={{ display: 'flex', gap: 6 }}>
-                    {o.status === 'en attente' && <ActionBtn onClick={() => approve(o.id)} color="#6ee7b7"><Ic.Check /> Publier</ActionBtn>}
-                    {o.status === 'active' && <ActionBtn onClick={() => expire(o.id)} color="var(--color-muted)"><Ic.X /> Clore</ActionBtn>}
-                    <ActionBtn color="var(--color-muted)"><Ic.Eye /></ActionBtn>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
-}
-
 function Signalements() {
   const [items, setItems] = useState(SIGNALEMENTS)
   const resolve = (id: number) => setItems(prev => prev.map(s => s.id === id ? { ...s, status: 'traité' } : s))
@@ -544,7 +493,6 @@ export default function Admin({ onBack }: { onBack: () => void }) {
     { key: 'dashboard',    icon: <Ic.Dashboard />,  label: 'Tableau de bord' },
     { key: 'artisans',     icon: <Ic.Users />,       label: 'Artisans' },
     { key: 'contenus',     icon: <Ic.Content />,     label: 'Contenus' },
-    { key: 'offres',       icon: <Ic.Briefcase />,   label: 'Offres d\'emploi' },
     { key: 'signalements', icon: <Ic.Flag />,        label: 'Signalements', badge: 3 },
     { key: 'parametres',   icon: <Ic.Settings />,    label: 'Paramètres' },
   ] as const
@@ -553,7 +501,6 @@ export default function Admin({ onBack }: { onBack: () => void }) {
     dashboard:    <Dashboard />,
     artisans:     <Artisans />,
     contenus:     <Contenus />,
-    offres:       <OffresAdmin />,
     signalements: <Signalements />,
     parametres:   <Parametres />,
   }
